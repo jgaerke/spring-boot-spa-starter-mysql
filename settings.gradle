@@ -1,0 +1,3 @@
+rootProject.name = 'spring-boot-spa-starter-mysql'
+include 'client'
+include 'server'
