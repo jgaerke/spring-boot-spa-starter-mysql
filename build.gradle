@@ -2,3 +2,23 @@ task wrapper(type: Wrapper) {
   gradleVersion = '2.12'
 }
 
+task copyDeploymentFiles(dependsOn: ['client:build', 'server:build']) {
+  doLast {
+//    copy {
+//      from '.elasticbeanstalk'
+//      into 'server/build/libs/.elasticbeanstalk'
+//    }
+    copy {
+      from 'etc/scripts/Procfile'
+      into 'server/build/libs'
+    }
+  }
+}
+
+
+task bundleDeploymentFiles(type: Zip, dependsOn: copyDeploymentFiles) {
+  destinationDir new File("${projectDir}/server/build/libs")
+  archiveName 'bundle.zip'
+  from fileTree('server/build/libs')
+  exclude '*.zip'
+}

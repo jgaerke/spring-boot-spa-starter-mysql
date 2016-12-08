@@ -1,6 +1,5 @@
 package com.jlg.app.config;
 
-import com.jlg.app.config.MvcConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;

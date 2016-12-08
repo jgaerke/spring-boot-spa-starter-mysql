@@ -28,7 +28,7 @@ CREATE TABLE account (
   credentials_expired   BIT          NOT NULL,
   disabled              BIT          NOT NULL,
   email                 VARCHAR(255),
-  expired               BIT          NOT NULL,
+  active                BIT          NOT NULL,
   first                 VARCHAR(255),
   last                  VARCHAR(255),
   locked                BIT          NOT NULL,

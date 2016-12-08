@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -15,7 +14,6 @@ import org.springframework.web.servlet.resource.VersionResourceResolver;
 import static java.util.Arrays.asList;
 
 @Configuration
-@EnableJdbcHttpSession
 public class MvcConfig extends WebMvcConfigurerAdapter {
 
   @Autowired

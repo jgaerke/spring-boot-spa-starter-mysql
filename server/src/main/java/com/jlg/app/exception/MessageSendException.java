@@ -2,7 +2,7 @@ package com.jlg.app.exception;
 
 import static java.lang.String.format;
 
-public class MessageSendException extends RuntimeException{
+public class MessageSendException extends RuntimeException {
   private static final long serialVersionUID = -5691348606685315231L;
 
   public MessageSendException(int code, String reason) {

@@ -1,0 +1,46 @@
+<section id="profile" class="row">
+    <div class="col-md-4">
+        <div>
+            {{#if serverErrors.emailTaken || serverErrors.accountInfoInvalid}}
+            <section id="profile-errors">
+                {{#if serverErrors.emailTaken}}
+                <div class="alert alert-danger " role="alert">Email taken</div>
+                {{/if}}
+                {{#if serverErrors.accountInfoInvalid}}
+                <div class="alert alert-danger" role="alert">Invalid account info</div>
+                {{/if}}
+            </section>
+            {{/if}}
+            <section>
+                <form id="profile-form" name="profile-form" novalidate="novalidate" role="form">
+                    <div class="form-group">
+                        <label class="control-label" for="email">Email</label>
+                        <input id="email" name="email" class="form-control" type="email"
+                               value="{{email}}"
+                               required="true"
+                               data-error="Invalid email"
+                               data-required-error="Required"/>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="first">First</label>
+                        <input id="first" name="first" class="form-control" type="text"
+                               value="{{first}}"
+                               required="true"
+                               data-error="Required"/>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="last">Last</label>
+                        <input id="last" name="last" class="form-control" type="text"
+                               value="{{last}}"
+                               required="true"
+                               data-error="Required"/>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Profile</button>
+                </form>
+            </section>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,1 @@
+order-cg-service: java -jar order-cg-service-1.0.0.jar -Xmms:256m

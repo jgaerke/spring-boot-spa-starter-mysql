@@ -1,13 +1,9 @@
 package com.jlg.app;
 
-import com.google.common.collect.Sets;
-import com.jlg.app.model.Account;
-import com.jlg.app.request.RegistrationRequest;
+import com.jlg.app.domain.Account;
 
+import java.util.Optional;
 import java.util.UUID;
-
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Sets.newHashSet;
 
 public class TestUtil {
   public static Account createValidNewAccount() {
@@ -15,11 +11,10 @@ public class TestUtil {
         .id(null)
         .email("some-email@gmail.com")
         .password("password")
-        .roles(newHashSet())
         .first("jeremy")
         .last("gaerke")
         .credentialsExpired(false)
-        .disabled(false)
+        .active(true)
         .expired(false)
         .locked(false)
         .passwordResetToken(null)
@@ -28,14 +23,13 @@ public class TestUtil {
 
   public static Account createValidExistingAccount() {
     return Account.builder()
-        .id(UUID.randomUUID())
+        .id(Optional.of(UUID.randomUUID()))
         .email("some-email@gmail.com")
         .password("password")
-        .roles(newHashSet())
         .first("jeremy")
         .last("gaerke")
         .credentialsExpired(false)
-        .disabled(false)
+        .active(true)
         .expired(false)
         .locked(false)
         .passwordResetToken(null)
@@ -43,7 +37,7 @@ public class TestUtil {
   }
 
 
-  public static RegistrationRequest createValidRegistrationRequest() {
-    return new RegistrationRequest("some-email@gmail.com", "some-password");
+  public static Account createValidRegistrationRequest() {
+    return Account.builder().email("some-email@gmail.com").password("some-password").build();
   }
 }

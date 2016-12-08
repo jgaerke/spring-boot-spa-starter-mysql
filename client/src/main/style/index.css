@@ -1,3 +1,9 @@
 body {
-    background-color: red;
+    padding-top: 75px;
+}
+
+.cloak { display: none !important; }
+
+.row {
+    margin-bottom: 10px;
 }

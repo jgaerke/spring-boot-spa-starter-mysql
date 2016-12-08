@@ -1,11 +1,7 @@
 package com.jlg.app.controller;
 
-import com.jlg.app.controller.AccountController;
-import com.jlg.app.request.PasswordChangeRequest;
-import com.jlg.app.request.PasswordRecoveryRequest;
-import com.jlg.app.request.PasswordResetRequest;
-import com.jlg.app.request.RegistrationRequest;
-import com.jlg.app.service.AccountService;
+import com.jlg.app.domain.Account;
+import com.jlg.app.service.AccountServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,16 +24,14 @@ import static org.mockito.Mockito.*;
 public class AccountControllerTest {
 
   @Mock
-  AccountService accountService;
+  AccountServiceImpl accountService;
 
   @Mock
   UserDetailsService userDetailsService;
-
-  @Mock
-  private HttpServletRequest request;
-
   @InjectMocks
   AccountController accountController;
+  @Mock
+  private HttpServletRequest request;
 
   @Before
   public void setup() {
@@ -48,8 +42,8 @@ public class AccountControllerTest {
   @Test
   public void should_create_account() throws Exception {
     //given
-    when(accountService.create(any(RegistrationRequest.class))).thenReturn(createValidExistingAccount());
-    RegistrationRequest registrationRequest = new RegistrationRequest("some-email@gmail.com", "password");
+    when(accountService.create(any(Account.class))).thenReturn(createValidExistingAccount());
+    Account registrationRequest = Account.builder().email("some-email@gmail.com").password("password").build();
     //when
     accountController.create(registrationRequest);
     //then
@@ -59,38 +53,38 @@ public class AccountControllerTest {
   @Test
   public void should_change_password() throws Exception {
     //given
-    when(accountService.changePassword(any(PasswordChangeRequest.class), anyString())).thenReturn
+    when(accountService.changePassword(any(Account.class), anyString())).thenReturn
         (createValidExistingAccount());
     Principal principal = mock(Principal.class);
     when(principal.getName()).thenReturn("some-email@gmail.com");
     when(request.getUserPrincipal()).thenReturn(principal);
-    PasswordChangeRequest passwordChangeRequest = new PasswordChangeRequest("password");
+    Account passwordChange = Account.builder().password("password").build();
     //when
-    accountController.changePassword(passwordChangeRequest, request);
+    accountController.changePassword(passwordChange, request);
     //then
-    verify(accountService).changePassword(eq(passwordChangeRequest), eq("some-email@gmail.com"));
+    verify(accountService).changePassword(eq(passwordChange), eq("some-email@gmail.com"));
   }
 
   @Test
   public void should_reset_password() throws Exception {
     //given
-    when(accountService.resetPassword(any(PasswordResetRequest.class))).thenReturn
+    when(accountService.resetPassword(any(Account.class))).thenReturn
         (createValidExistingAccount());
-    PasswordResetRequest passwordResetRequest = new PasswordResetRequest("token", "password");
+    Account passwordReset = Account.builder().passwordResetToken("token").password("password").build();
     //when
-    accountController.resetPassword(passwordResetRequest);
+    accountController.resetPassword(passwordReset);
     //then
-    verify(accountService).resetPassword(eq(passwordResetRequest));
+    verify(accountService).resetPassword(eq(passwordReset));
   }
 
   @Test
   public void should_recover_password() throws Exception {
     //given
-    when(accountService.resetPassword(any(PasswordResetRequest.class))).thenReturn
+    when(accountService.resetPassword(any(Account.class))).thenReturn
         (createValidExistingAccount());
-    PasswordRecoveryRequest passwordRecoveryRequest = new PasswordRecoveryRequest("some-email@gmail.com");
+    Account passwordRecovery = Account.builder().email("some-email@gmail.com").build();
     //when
-    accountController.recoverPassword(passwordRecoveryRequest);
+    accountController.recoverPassword(passwordRecovery);
     //then
     verify(accountService).sendPasswordResetInstructions(eq("some-email@gmail.com"));
   }
