@@ -19,14 +19,12 @@ import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.session.data.mongo.config.annotation.web.http.EnableMongoHttpSession;
 
 import static org.springframework.boot.autoconfigure.security.SecurityProperties.ACCESS_OVERRIDE_ORDER;
 import static org.springframework.http.HttpMethod.POST;
 
 @Configuration
 @EnableWebSecurity
-@EnableMongoHttpSession
 @Order(ACCESS_OVERRIDE_ORDER)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
@@ -78,7 +76,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .invalidateHttpSession(true);
     http.rememberMe().rememberMeParameter("rememberMe");
 
-
     //authorization
     http.authorizeRequests()
         .antMatchers(
@@ -92,12 +89,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/api/**",
             "/h2",
             "/h2/**",
+            "/h2/**/*",
             "/h2/login**"
         )
         .permitAll()
         .anyRequest()
         .authenticated();
-
 
 //    http.headers().frameOptions().disable();
 
@@ -106,6 +103,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     //cross site forgery protection
     http.csrf().disable();
+
+    //disable frame options for h2 console.
+    http.headers().frameOptions().disable();
 //    http
 //        .csrf()
 ////        .requireCsrfProtectionMatcher(new AntPathRequestMatcher("/api/**"))

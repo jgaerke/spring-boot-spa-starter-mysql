@@ -1,0 +1,1 @@
+RUNSCRIPT FROM '../migration.sql'
